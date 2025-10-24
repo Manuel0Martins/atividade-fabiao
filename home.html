@@ -1,0 +1,140 @@
+<!doctype html>
+<html lang="pt-BR">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>Player - Semana 1</title>
+  <style>
+    :root{
+      --bg:#121212;
+      --card:#1f1f1f;
+      --accent:#1db954;
+      --text:#e6e6e6;
+    }
+
+    *{box-sizing:border-box;font-family:Inter,system-ui,Arial,Helvetica,sans-serif}
+    body{
+      margin:0;
+      background:linear-gradient(180deg,#0f0f0f,var(--bg));
+      color:var(--text);
+      min-height:100vh;
+      padding:24px;
+    }
+
+    .topo{margin-bottom:20px}
+    .container{max-width:960px;margin:0 auto}
+
+    /* layout da lista */
+    .lista{
+      display:flex;             /* Copilot: 'display: flex' transforma o elemento em um container flexível.
+                                Ele organiza os filhos em linha ou coluna, facilitando alinhamento e distribuição. */
+      flex-wrap:wrap;
+      gap:16px;
+    }
+
+    /* cartão estilo "Spotify" simplificado */
+    .musica-card{
+      background:var(--card);
+      border-radius:8px;
+      padding:12px;
+      width:220px;
+      display:flex;
+      gap:10px;
+      align-items:center;
+      box-shadow:0 4px 10px rgba(0,0,0,0.6);
+      transition:transform .12s ease;
+    }
+    .musica-card:hover{transform:translateY(-4px)}
+
+    .capa{
+      width:64px;height:64px;border-radius:6px;background:#333;flex-shrink:0;
+      object-fit:cover;
+    }
+
+    .info{flex:1;min-width:0}
+    .titulo{font-weight:700;font-size:14px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+    .artista{font-size:13px;color:#bdbdbd;margin-top:4px}
+
+    .botao{
+      background:var(--accent);
+      color:#fff;padding:6px 10px;border-radius:6px;border:0;cursor:pointer;font-weight:600;
+      font-size:13px;
+    }
+
+    /* acessibilidade simples */
+    .musica-card:focus-within{outline:2px solid rgba(29,185,84,0.14)}
+  </style>
+</head>
+<body>
+  <header class="topo">
+    <h1>Bem-vindos — Projeto Semana 1</h1>
+    <p>Exemplo: lista de músicas gerada por JS</p>
+  </header>
+
+  <!-- Uso de <section> para agrupar uma parte semântica da página:
+       Copilot: usamos <section> quando o conteúdo faz sentido como uma seção independente da página,
+       ajudando acessibilidade e organização do layout. -->
+  <section class="container">
+    <div id="lista-de-musicas" class="lista" aria-live="polite"></div>
+  </section>
+
+  <script>
+    // Banco de dados falso: array de objetos 'musicas'
+    const musicas = [
+      { titulo: "Noite Perfeita", artista: "Banda Exemplo", capaUrl: "https://picsum.photos/seed/1/200" },
+      { titulo: "Amanhecer", artista: "DJ Teste", capaUrl: "https://picsum.photos/seed/2/200" },
+      { titulo: "Ritmo Indie", artista: "Trio Demo", capaUrl: "https://picsum.photos/seed/3/200" },
+      { titulo: "Eletrônica 101", artista: "Produtor X", capaUrl: "https://picsum.photos/seed/4/200" }
+    ];
+
+    // Copilot: explicação sobre manipulação do DOM:
+    // Usamos uma função que cria elementos e os anexa ao DOM para evitar
+    // sobrescrever acidentalmente outros elementos e para melhor desempenho em listas.
+    function renderLista() {
+      const container = document.getElementById('lista-de-musicas');
+      container.innerHTML = ''; // limpa conteúdo antes de renderizar
+
+      musicas.forEach(m => {
+        const card = document.createElement('div');
+        card.className = 'musica-card';
+        card.tabIndex = 0;
+
+        const img = document.createElement('img');
+        img.className = 'capa';
+        img.src = m.capaUrl;
+        img.alt = m.titulo;
+
+        const info = document.createElement('div');
+        info.className = 'info';
+
+        const titulo = document.createElement('div');
+        titulo.className = 'titulo';
+        titulo.textContent = m.titulo;
+
+        const artista = document.createElement('div');
+        artista.className = 'artista';
+        artista.textContent = m.artista;
+
+        const bot = document.createElement('button');
+        bot.className = 'botao';
+        bot.textContent = 'Tocar';
+        bot.addEventListener('click', () => {
+          alert(`Tocando: ${m.titulo} — ${m.artista}`);
+        });
+
+        info.appendChild(titulo);
+        info.appendChild(artista);
+
+        card.appendChild(img);
+        card.appendChild(info);
+        card.appendChild(bot);
+
+        container.appendChild(card);
+      });
+    }
+
+    // renderiza ao carregar o arquivo
+    renderLista();
+  </script>
+</body>y>
+</html>
